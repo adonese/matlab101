@@ -86,4 +86,4 @@ There are many algorithms for solving the square root, but we will use a very si
 
 **Our algorithm**. Let _N_ denotes the number that we want to take its square root. The solution is some number between (0, N). Let the lower bound be _lower_, and the higher bound be _upper_, and the solution be _sol_. We need to find a number between (lower, upper). As a good choice, we choose it to be the middle of them (can you guess why?). If the solution^2 is greater than N, that means the solution is in the lower bound. Else, it is in the upper bound. 
 
-![this figure demonstrates the idea of divide and conquer](/home/adonese/Pictures/drawing.png)
+![this figure demonstrates the idea of divide and conquer](drawing.png)
