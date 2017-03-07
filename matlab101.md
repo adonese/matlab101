@@ -84,6 +84,36 @@ The square root problem.
 
 There are many algorithms for solving the square root, but we will use a very simple one.
 
-**Our algorithm**. Let _N_ denotes the number that we want to take its square root. The solution is some number between (0, N). Let the lower bound be _lower_, and the higher bound be _upper_, and the solution be _sol_. We need to find a number between (lower, upper). As a good choice, we choose it to be the middle of them (can you guess why?). If the solution^2 is greater than N, that means the solution is in the lower bound. Else, it is in the upper bound. 
+**Our algorithm**. Let _N_ denotes the number that we want to take its square root. The solution is some number between (0, N). Let the lower bound be _lower_, and the higher bound be _upper_, and the solution be _sol_. We need to find a number between (lower, upper). As a good choice, we choose it to be the middle of them (can you guess why?). We can use the brute force solution of trying each number starting from zero to N (remember N is the number we want to find its square root). Using our strategy of divide and conquer, at each step, we will decrease the solution space by a half. If the solution^2 is greater than N, that means the solution is in the lower bound. Else, it is in the upper bound. 
 
 ![this figure demonstrates the idea of divide and conquer](drawing.png)
+In this figure, we have _L_ that denotes the lower bound, _U_, denotes the upper bounds, and _S_, which is our guess solution. So, if S * S > N, then we let the upper bound equals to S. If the S * S < N, we will let the lower bound equals to S. If else, then we find our square root, that is N = S.
+![This figure demonstrates the solution strategy](flowRoot3400.png) 
+
+Let us write our algorithm using a pseudocode.
+
+```
+lower = 0
+upper = N
+guess = (lower + upper) / 2
+epsilon = 1e-4
+repeat untill abs(guess - N) <= epsilon
+    if guess*guess > N % the solution is some where between lower and guess
+        upper = guess
+    else if guess*guess < N % the solution is some where between guess and upper
+        lower = guess
+    else
+        N = guess
+        % We may use break, for now we may not need it so much.
+    guess = (lower + upper) / 2
+```
+
+Well, give yourself a few moments and study this code. 
+
+In the first three lines of this program, we have initialized our variables: `lower, upper, and guess`. The idea of our algorithm is to divide the solution space at each time by half. If we are dealing with a space of size _m_ in the first pass, then in the second pass will be dealing with a space of _m/2_ by ignoring a half of the the solution space. We will do that untill convergence! The question is, when do we converge? We are limited by our floating point precision [consult this wiki entry](https://en.wikipedia.org/wiki/Floating_point). But simply that means, your computer cannot process an infinite number. They have limitations (32 bit, or 64 bit). In our case, we might not need to do that, but you need to know it anyway. 
+For our first guess we set it to be `(lower + upper) / 2`. Then, we need to set some convergence criteria, so that we avoid going too much. In this case, we want our solution to have an accuracy of e-4 i.e., accuracy for the 4th floating point. Untill this step the program should be somewhat easy for you to understand.
+In the 5th line, we have introduced a slightly new concept for you, loops.
+
+### Loops in MATLAB
+So far we have not actually written any MATLAB code, and that was intended. Let us pick up from where we have lefted in our discussion of square root program. We have stopped at the concept of the loops.
+Before we go any further, let us remind ourseleves of what we want to achieve. We want to divide the solution space at each time by a half. To do that, we want to update our solution boundaries e.g., updating `lower` and `upper` bounds, and `guess` accordingly. 
